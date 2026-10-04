@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Catalog · Ruble conversion</title>
+  <!-- Google Font & simple icons via Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #f5f7fc;
+      color: #1e293b;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .main-container {
+      max-width: 1440px;
+      width: 100%;
+      background: white;
+      border-radius: 2.5rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      padding: 2rem 2rem 2.5rem;
+      transition: all 0.2s;
+    }
+
+    /* header */
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      gap: 1.5rem;
+    }
+
+    .title-section h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #0f172a, #334155);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .title-section h1 i {
+      background: linear-gradient(145deg, #2563eb, #1e40af);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 2rem;
+    }
+
+    .badge-rate {
+      display: inline-flex;
+      align-items: center;
+      background: #eef2ff;
+      border-radius: 100px;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #1e40af;
+      gap: 0.5rem;
+      border: 1px solid #c7d2fe;
+      margin-top: 0.5rem;
+      box-shadow: 0 2px 5px rgba(37, 99, 235, 0.08);
+    }
+
+    .badge-rate i {
+      font-size: 1rem;
+    }
+
+    .stats {
+      display: flex;
+      gap: 1.5rem;
+      background: #f8fafc;
+      padding: 0.75rem 1.5rem;
+      border-radius: 2rem;
+      border: 1px solid #e2e8f0;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .stat-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+
+    /* controls */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8fafc;
+      padding: 0.85rem 1.25rem;
+      border-radius: 2rem;
+      border: 1px solid #e2e8f0;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 2rem;
+      padding: 0.4rem 0.4rem 0.4rem 1.25rem;
+      border: 1px solid #cbd5e1;
+      transition: 0.2s;
+      flex: 2 1 280px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+
+    .search-box:focus-within {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .search-box i {
+      color: #94a3b8;
+      font-size: 1rem;
+      margin-right: 0.6rem;
+    }
+
+    .search-box input {
+      border: none;
+      font-size: 0.95rem;
+      padding: 0.5rem 0;
+      width: 100%;
+      outline: none;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      color: #0f172a;
+    }
+
+    .search-box input::placeholder {
+      color: #94a3b8;
+      font-weight: 400;
+    }
+
+    .sort-group {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .sort-btn, .filter-btn {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 2rem;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: 0.15s;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      white-space: nowrap;
+    }
+
+    .sort-btn:hover, .filter-btn:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .sort-btn.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: white;
+      box-shadow: 0 4px 10px -2px rgba(37, 99, 235, 0.3);
+    }
+
+    .sort-btn i {
+      font-size: 0.8rem;
+    }
+
+    /* table wrapper */
+    .table-wrapper {
+      border-radius: 1.5rem;
+      border: 1px solid #e9eef3;
+      overflow: auto;
+      max-height: 620px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      min-width: 540px;
+    }
+
+    thead {
+      background: #f1f5f9;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    th {
+      text-align: left;
+      padding: 1rem 1.5rem;
+      font-weight: 600;
+      color: #334155;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border-bottom: 1px solid #d1d9e6;
+      white-space: nowrap;
+      background: #f1f5f9;
+    }
+
+    td {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #ecf1f7;
+      color: #1e293b;
+      font-weight: 500;
+      transition: background 0.1s;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover td {
+      background: #f8faff;
+    }
+
+    .account-id {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-weight: 600;
+      color: #0f172a;
+      letter-spacing: 0.01em;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .account-id i {
+      color: #94a3b8;
+      font-size: 0.8rem;
+    }
+
+    .price-usd {
+      font-weight: 500;
+      color: #475569;
+    }
+
+    .price-rub {
+      font-weight: 700;
+      color: #0f172a;
+      background: #eef2ff;
+      padding: 0.25rem 0.85rem;
+      border-radius: 2rem;
+      display: inline-block;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      border: 1px solid #c7d2fe;
+      letter-spacing: 0.01em;
+    }
+
+    .price-rub i {
+      font-size: 0.7rem;
+      color: #2563eb;
+      margin-right: 0.2rem;
+    }
+
+    .no-result {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #64748b;
+      font-weight: 500;
+      background: white;
+      border-radius: 1.5rem;
+    }
+
+    .no-result i {
+      font-size: 3rem;
+      color: #cbd5e1;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .footer-note {
+      margin-top: 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.8rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .footer-note .rate-highlight {
+      background: #eef2ff;
+      padding: 0.3rem 1rem;
+      border-radius: 2rem;
+      color: #1e40af;
+      font-weight: 600;
+    }
+
+    /* custom scrollbar */
+    .table-wrapper::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 1rem 0.75rem; }
+      .main-container { padding: 1.5rem 1rem; }
+      .header { flex-direction: column; align-items: start; }
+      .stats { width: 100%; justify-content: space-around; }
+      th, td { padding: 0.85rem 1rem; }
+      .account-id { font-size: 0.8rem; }
+      .price-rub { font-size: 0.8rem; padding: 0.2rem 0.65rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="title-section">
+        <h1>
+          <i class="fas fa-address-book"></i> 
+          Account Catalog
+        </h1>
+        <div class="badge-rate">
+          <i class="fas fa-ruble-sign"></i> 
+          USD → RUB · 1$ = 92.50 ₽
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-label">Total accounts</div>
+          <div class="stat-value" id="totalCount">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Min price</div>
+          <div class="stat-value" id="minPrice">—</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Max price</div>
+          <div class="stat-value" id="maxPrice">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Search account ID...">
+      </div>
+      <div class="sort-group">
+        <button class="sort-btn" id="sortDefaultBtn" title="Sort by original order">
+          <i class="fas fa-list"></i> Default
+        </button>
+        <button class="sort-btn" id="sortPriceAscBtn" title="Sort by price (low to high)">
+          <i class="fas fa-arrow-up-wide-short"></i> Price ↑
+        </button>
+        <button class="sort-btn active" id="sortPriceDescBtn" title="Sort by price (high to low)">
+          <i class="fas fa-arrow-down-wide-short"></i> Price ↓
+        </button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrapper" id="tableWrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Account ID</th>
+            <th>Price (USD)</th>
+            <th>Price (RUB ₽)</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- rendered with JS -->
+        </tbody>
+      </table>
+      <div id="noResultMessage" class="no-result" style="display: none;">
+        <i class="fas fa-search"></i>
+        No accounts match your search.
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-note">
+      <div><i class="fas fa-calculator"></i> Conversion at fixed rate: <span class="rate-highlight">1 USD = 92.50 ₽</span></div>
+      <div><i class="fas fa-database"></i> <span id="displayedCount">0</span> accounts displayed</div>
+    </div>
+  </div>
+
+  <script>
+    // ---------- DATA (provided) ----------
+    const rawAccounts = [
+      { "account_id": "17333331130", "price": 6 },
+      { "account_id": "17333331111", "price": 12 },
+      { "account_id": "17333333315", "price": 7.5 },
+      { "account_id": "17333333313", "price": 16 },
+      { "account_id": "17333331122", "price": 6 },
+      { "account_id": "17333331120", "price": 6 },
+      { "account_id": "17333333321", "price": 7.5 },
+      { "account_id": "17333331119", "price": 6 },
+      { "account_id": "17333331118", "price": 6 },
+      { "account_id": "17333330030", "price": 8.5 },
+      { "account_id": "17333330031", "price": 7.5 },
+      { "account_id": "17333333330", "price": 23 },
+      { "account_id": "17333333336", "price": 23 },
+      { "account_id": "17333333340", "price": 8.5 },
+      { "account_id": "17333333343", "price": 13 },
+      { "account_id": "17333333353", "price": 13 },
+      { "account_id": "17333333373", "price": 13 },
+      { "account_id": "17333333377", "price": 13 },
+      { "account_id": "17333333324", "price": 7.5 },
+      { "account_id": "17333333325", "price": 7.5 },
+      { "account_id": "17333333327", "price": 7.5 },
+      { "account_id": "17333333328", "price": 7.5 },
+      { "account_id": "17333330101", "price": 6 },
+      { "account_id": "17333330033", "price": 12 },
+      { "account_id": "17333333306", "price": 7.5 },
+      { "account_id": "17333331117", "price": 6 },
+      { "account_id": "17333331116", "price": 6 },
+      { "account_id": "17333331115", "price": 6 },
+      { "account_id": "17333331113", "price": 13 },
+      { "account_id": "17333331112", "price": 6 },
+      { "account_id": "17333333303", "price": 20 },
+      { "account_id": "17333333100", "price": 7.5 },
+      { "account_id": "17333333044", "price": 6 },
+      { "account_id": "17333333034", "price": 6 },
+      { "account_id": "17333333011", "price": 13 },
+      { "account_id": "17333331166", "price": 6 },
+      { "account_id": "17333331144", "price": 6 },
+      { "account_id": "17333333302", "price": 8.5 },
+      { "account_id": "17333330099", "price": 6 },
+      { "account_id": "17333333299", "price": 6 },
+      { "account_id": "17333330100", "price": 6 },
+      { "account_id": "17333330300", "price": 12 },
+      { "account_id": "17333330331", "price": 12 },
+      { "account_id": "17333330332", "price": 6 },
+      { "account_id": "17333330333", "price": 20 },
+      { "account_id": "17333330334", "price": 6 },
+      { "account_id": "17333330880", "price": 6 },
+      { "account_id": "17333330881", "price": 6 },
+      { "account_id": "17333330301", "price": 6 },
+      { "account_id": "17333330313", "price": 8.5 },
+      { "account_id": "17333330330", "price": 12 },
+      { "account_id": "17333333320", "price": 7.5 },
+      { "account_id": "17333330037", "price": 6 },
+      { "account_id": "17333331133", "price": 6 },
+      { "account_id": "17099999090", "price": 8.5 },
+      { "account_id": "17099999088", "price": 6 },
+      { "account_id": "17099997477", "price": 6 },
+      { "account_id": "17099999888", "price": 13 },
+      { "account_id": "17100001707", "price": 8.5 },
+      { "account_id": "17099999889", "price": 13 },
+      { "account_id": "17100001717", "price": 12 },
+      { "account_id": "17099999898", "price": 13 },
+      { "account_id": "17111111001", "price": 14 },
+      { "account_id": "17099999899", "price": 13 },
+      { "account_id": "17111111109", "price": 12 },
+      { "account_id": "17099999900", "price": 13 },
+      { "account_id": "17099999098", "price": 6 },
+      { "account_id": "17099999100", "price": 8.5 },
+      { "account_id": "17111111120", "price": 25 },
+      { "account_id": "17099999886", "price": 6 },
+      { "account_id": "17099999887", "price": 6 },
+      { "account_id": "17099999901", "price": 13 },
+      { "account_id": "17099999908", "price": 13 },
+      { "account_id": "17111111125", "price": 8.5 },
+      { "account_id": "17099999101", "price": 8.5 },
+      { "account_id": "17111111126", "price": 8.5 },
+      { "account_id": "17111111128", "price": 8.5 },
+      { "account_id": "17111111133", "price": 8.5 },
+      { "account_id": "17111111136", "price": 8.5 },
+      { "account_id": "17111111139", "price": 8.5 },
+      { "account_id": "17111111414", "price": 14 },
+      { "account_id": "17111111611", "price": 14 },
+      { "account_id": "17111111666", "price": 21 },
+      { "account_id": "17111111699", "price": 21 },
+      { "account_id": "17111111788", "price": 8.5 },
+      { "account_id": "17111112221", "price": 21 },
+      { "account_id": "17099999909", "price": 13 },
+      { "account_id": "17099999910", "price": 13 },
+      { "account_id": "17099999911", "price": 13 },
+      { "account_id": "17111111117", "price": 71 },
+      { "account_id": "17099999099", "price": 13 },
+      { "account_id": "17099999919", "price": 13 },
+      { "account_id": "17099999929", "price": 13 },
+      { "account_id": "17099999883", "price": 6 },
+      { "account_id": "17111111127", "price": 25 },
+      { "account_id": "17111111188", "price": 25 },
+      { "account_id": "17099999884", "price": 6 },
+      { "account_id": "17100000660", "price": 13 },
+      { "account_id": "17111111105", "price": 12 },
+      { "account_id": "17111111122", "price": 35 },
+      { "account_id": "17111111121", "price": 35 },
+      { "account_id": "17111111110", "price": 35 },
+      { "account_id": "17111111114", "price": 35 },
+      { "account_id": "13888888888", "price": 894 },
+      { "account_id": "16702222222", "price": 14 },
+      { "account_id": "16666666579", "price": 12 },
+      { "account_id": "16666664441", "price": 7.5 },
+      { "account_id": "16666666933", "price": 12 },
+      { "account_id": "16666666947", "price": 12 },
+      { "account_id": "16666666960", "price": 12 },
+      { "account_id": "16666666977", "price": 12 },
+      { "account_id": "16666669988", "price": 12 },
+      { "account_id": "16666669997", "price": 12 },
+      { "account_id": "16666676655", "price": 12 },
+      { "account_id": "16666676666", "price": 14 },
+      { "account_id": "16666666539", "price": 12 },
+      { "account_id": "16666666550", "price": 12 },
+      { "account_id": "16666677799", "price": 12 },
+      { "account_id": "16666666608", "price": 13 },
+      { "account_id": "16666666612", "price": 13 },
+      { "account_id": "16666666003", "price": 12 },
+      { "account_id": "16666666008", "price": 12 },
+      { "account_id": "16666666013", "price": 12 },
+      { "account_id": "16666666022", "price": 12 },
+      { "account_id": "16666666023", "price": 12 },
+      { "account_id": "16666666026", "price": 12 },
+      { "account_id": "16666666029", "price": 12 },
+      { "account_id": "16666666030", "price": 12 },
+      { "account_id": "16666666031", "price": 12 },
+      { "account_id": "16666666614", "price": 13 },
+      { "account_id": "16666666033", "price": 12 },
+      { "account_id": "16666666035", "price": 12 },
+      { "account_id": "16666666038", "price": 12 },
+      { "account_id": "16666666042", "price": 12 },
+      { "account_id": "16666666052", "price": 12 },
+      { "account_id": "16666666055", "price": 12 },
+      { "account_id": "16666666056", "price": 12 },
+      { "account_id": "16666666057", "price": 12 },
+      { "account_id": "16666666059", "price": 12 },
+      { "account_id": "16666666070", "price": 12 },
+      { "account_id": "16666666090", "price": 12 },
+      { "account_id": "16666666101", "price": 12 },
+      { "account_id": "16666666106", "price": 12 },
+      { "account_id": "16666666303", "price": 12 },
+      { "account_id": "16666666311", "price": 12 },
+      { "account_id": "16666666330", "price": 13 },
+      { "account_id": "16666666400", "price": 12 },
+      { "account_id": "16666666412", "price": 12 },
+      { "account_id": "16666666424", "price": 12 },
+      { "account_id": "16666666435", "price": 12 },
+      { "account_id": "16666666437", "price": 12 },
+      { "account_id": "16666666443", "price": 12 },
+      { "account_id": "16666666444", "price": 14 },
+      { "account_id": "16666666644", "price": 19 },
+      { "account_id": "16666666677", "price": 16 },
+      { "account_id": "16666666450", "price": 12 },
+      { "account_id": "16666666462", "price": 12 },
+      { "account_id": "16666666466", "price": 12 },
+      { "account_id": "16666666467", "price": 12 },
+      { "account_id": "16666666478", "price": 12 },
+      { "account_id": "16666666490", "price": 12 },
+      { "account_id": "16666666511", "price": 12 },
+      { "account_id": "16666666516", "price": 12 },
+      { "account_id": "16666666518", "price": 12 },
+      { "account_id": "16666666521", "price": 12 },
+      { "account_id": "16666666522", "price": 12 },
+      { "account_id": "16666666523", "price": 12 },
+      { "account_id": "16666666531", "price": 12 },
+      { "account_id": "16666666536", "price": 12 },
+      { "account_id": "16666666557", "price": 12 },
+      { "account_id": "16666666572", "price": 12 },
+      { "account_id": "16666666573", "price": 12 },
+      { "account_id": "16666666883", "price": 12 },
+      { "account_id": "16666666597", "price": 12 },
+      { "account_id": "16666666598", "price": 12 },
+      { "account_id": "16666666599", "price": 12 },
+      { "account_id": "16666666787", "price": 12 },
+      { "account_id": "16666666797", "price": 12 },
+      { "account_id": "16666666798", "price": 12 },
+      { "account_id": "16666666801", "price": 12 },
+      { "account_id": "16666666808", "price": 12 },
+      { "account_id": "16666666810", "price": 12 },
+      { "account_id": "16666666811", "price": 12 },
+      { "account_id": "16666666881", "price": 12 },
+      { "account_id": "15777777702", "price": 7.5 },
+      { "account_id": "16000000107", "price": 7.5 },
+      { "account_id": "16000000109", "price": 7.5 },
+      { "account_id": "15600000110", "price": 7.5 },
+      { "account_id": "16000001001", "price": 8.5 },
+      { "account_id": "15777777722", "price": 12 },
+      { "account_id": "15579999666", "price": 7.5 },
+      { "account_id": "15600000030", "price": 12 },
+      { "account_id": "15600000040", "price": 12 },
+      { "account_id": "15600000050", "price": 12 },
+      { "account_id": "15600000100", "price": 21 },
+      { "account_id": "15600000101", "price": 19 },
+      { "account_id": "15600000111", "price": 7.5 },
+      { "account_id": "15599999889", "price": 8.5 },
+      { "account_id": "15599999887", "price": 8.5 },
+      { "account_id": "15750000100", "price": 7.5 },
+      { "account_id": "16000000091", "price": 12 },
+      { "account_id": "15579999699", "price": 7.5 },
+      { "account_id": "16000000067", "price": 12 },
+      { "account_id": "16000000096", "price": 12 },
+      { "account_id": "16000000093", "price": 12 },
+      { "account_id": "16000000092", "price": 12 },
+      { "account_id": "16000000088", "price": 12 },
+      { "account_id": "16000000087", "price": 12 },
+      { "account_id": "16000000084", "price": 12 },
+      { "account_id": "15777777795", "price": 7.5 },
+      { "account_id": "15800000030", "price": 7.5 },
+      { "account_id": "16100000888", "price": 13 },
+      { "account_id": "16000000111", "price": 12 },
+      { "account_id": "16000000770", "price": 13 },
+      { "account_id": "16000000170", "price": 11 },
+      { "account_id": "15579999994", "price": 7.5 },
+      { "account_id": "16000000080", "price": 12 },
+      { "account_id": "16000000079", "price": 12 },
+      { "account_id": "16000000076", "price": 13 },
+      { "account_id": "16000000064", "price": 12 },
+      { "account_id": "16000000058", "price": 12 },
+      { "account_id": "16100002000", "price": 12 },
+      { "account_id": "16000001000", "price": 56 },
+      { "account_id": "15579999997", "price": 7.5 },
+      { "account_id": "16100001000", "price": 21 },
+      { "account_id": "16000000054", "price": 12 },
+      { "account_id": "16000000101", "price": 21 },
+      { "account_id": "16100000777", "price": 13 },
+      { "account_id": "16000000880", "price": 13 },
+      { "account_id": "16000000771", "price": 13 },
+      { "account_id": "16000000660", "price": 8.5 },
+      { "account_id": "16000000103", "price": 7.5 },
+      { "account_id": "14414444401", "price": 12 },
+      { "account_id": "14414444477", "price": 12 },
+      { "account_id": "15000000102", "price": 12 },
+      { "account_id": "15000000103", "price": 12 },
+      { "account_id": "15000000104", "price": 12 },
+      { "account_id": "15000000105", "price": 13 },
+      { "account_id": "15000000106", "price": 12 },
+      { "account_id": "15000000113", "price": 12 },
+      { "account_id": "15000000114", "price": 12 },
+      { "account_id": "15000000115", "price": 12 },
+      { "account_id": "15000000116", "price": 12 },
+      { "account_id": "15000000117", "price": 12 },
+      { "account_id": "15000000118", "price": 12 },
+      { "account_id": "15000000119", "price": 12 },
+      { "account_id": "15000000120", "price": 12 },
+      { "account_id": "15333333131", "price": 13 },
+      { "account_id": "15555555020", "price": 11 },
+      { "account_id": "15288888800", "price": 12 },
+      { "account_id": "15000000121", "price": 12 },
+      { "account_id": "15000000122", "price": 12 },
+      { "account_id": "15000001777", "price": 8.5 },
+      { "account_id": "15555555042", "price": 11 },
+      { "account_id": "15555555004", "price": 11 },
+      { "account_id": "15333333555", "price": 8.5 },
+      { "account_id": "15333333444", "price": 12 },
+      { "account_id": "15333333375", "price": 12 },
+      { "account_id": "15333333371", "price": 12 },
+      { "account_id": "15333333358", "price": 12 },
+      { "account_id": "15333333349", "price": 12 },
+      { "account_id": "15333333306", "price": 12 },
+      { "account_id": "15277778777", "price": 11 },
+      { "account_id": "15277777877", "price": 11 },
+      { "account_id": "15277777111", "price": 11 },
+      { "account_id": "15277777117", "price": 11 },
+      { "account_id": "15333333888", "price": 12 },
+      { "account_id": "15333333376", "price": 11 },
+      { "account_id": "15333333326", "price": 11 },
+      { "account_id": "15222222233", "price": 11 },
+      { "account_id": "14999999901", "price": 12 },
+      { "account_id": "14377777700", "price": 11 },
+      { "account_id": "14700000010", "price": 12 },
+      { "account_id": "14799999997", "price": 14 },
+      { "account_id": "14999999777", "price": 11 },
+      { "account_id": "14999999779", "price": 11 },
+      { "account_id": "14999999799", "price": 11 },
+      { "account_id": "15200001000", "price": 7.5 },
+      { "account_id": "14999999982", "price": 7.5 },
+      { "account_id": "15199999991", "price": 8.5 },
+      { "account_id": "15555555077", "price": 46 },
+      { "account_id": "15199999992", "price": 8.5 },
+      { "account_id": "15199999993", "price": 8.5 },
+      { "account_id": "15199999994", "price": 8.5 },
+      { "account_id": "15555555006", "price": 11 },
+      { "account_id": "14399999997", "price": 11 },
+      { "account_id": "14414444001", "price": 12 },
+      { "account_id": "14414444004", "price": 12 },
+      { "account_id": "14414444400", "price": 12 },
+      { "account_id": "15288888889", "price": 12 },
+      { "account_id": "15288888887", "price": 12 },
+      { "account_id": "15555555058", "price": 11 },
+      { "account_id": "15555555499", "price": 12 },
+      { "account_id": "15333333001", "price": 8.5 },
+      { "account_id": "15000000024", "price": 19 },
+      { "account_id": "15000000020", "price": 24 },
+      { "account_id": "15000000021", "price": 21 },
+      { "account_id": "15000000111", "price": 21 },
+      { "account_id": "15200001771", "price": 0.5 },
+      { "account_id": "15000000999", "price": 21 },
+      { "account_id": "15270000000", "price": 20 },
+      { "account_id": "15333333303", "price": 21 },
+      { "account_id": "15333333003", "price": 13 },
+      { "account_id": "15269999999", "price": 11 },
+      { "account_id": "15000000096", "price": 14 },
+      { "account_id": "15000000097", "price": 16 },
+      { "account_id": "15000000098", "price": 14 },
+      { "account_id": "14399999333", "price": 7.5 },
+      { "account_id": "14399999933", "price": 7.5 },
+      { "account_id": "14999999902", "price": 7.5 },
+      { "account_id": "14999999903", "price": 7.5 },
+      { "account_id": "14999999904", "price": 7.5 },
+      { "account_id": "14999999905", "price": 7.5 },
+      { "account_id": "14999999906", "price": 7.5 },
+      { "account_id": "14377777702", "price": 7.5 },
+      { "account_id": "14377777706", "price": 7.5 },
+      { "account_id": "14999999907", "price": 7.5 },
+      { "account_id": "14999999908", "price": 7.5 },
+      { "account_id": "14999999912", "price": 7.5 },
+      { "account_id": "14999999913", "price": 7.5 },
+      { "account_id": "14999999916", "price": 7.5 },
+      { "account_id": "14999999917", "price": 7.5 },
+      { "account_id": "14999999918", "price": 7.5 },
+      { "account_id": "15150001111", "price": 11 },
+      { "account_id": "14999999922", "price": 7.5 },
+      { "account_id": "14599999998", "price": 8.5 },
+      { "account_id": "15000000033", "price": 14 },
+      { "account_id": "15000000047", "price": 14 },
+      { "account_id": "15000000088", "price": 23 },
+      { "account_id": "15000000090", "price": 23 },
+      { "account_id": "15000000101", "price": 24 },
+      { "account_id": "15555555516", "price": 21 },
+      { "account_id": "15555555546", "price": 21 },
+      { "account_id": "14999999929", "price": 11 },
+      { "account_id": "14999999939", "price": 11 },
+      { "account_id": "14999999969", "price": 13 },
+      { "account_id": "15000000011", "price": 19 },
+      { "account_id": "15000000012", "price": 19 },
+      { "account_id": "14999999923", "price": 7.5 },
+      { "account_id": "15150000707", "price": 11 },
+      { "account_id": "15150000717", "price": 11 },
+      { "account_id": "15150000727", "price": 11 },
+      { "account_id": "15150000737", "price": 11 },
+      { "account_id": "15150000747", "price": 11 },
+      { "account_id": "15150000700", "price": 11 },
+      { "account_id": "14999999924", "price": 7.5 },
+      { "account_id": "14999999925", "price": 7.5 },
+      { "account_id": "14999999926", "price": 7.5 },
+      { "account_id": "14999999927", "price": 7.5 },
+      { "account_id": "14999999928", "price": 7.5 },
+      { "account_id": "14999999930", "price": 7.5 },
+      { "account_id": "15000001221", "price": 8.5 },
+      { "account_id": "15000004141", "price": 8.5 },
+      { "account_id": "14999999931", "price": 7.5 },
+      { "account_id": "15200001099", "price": 0.5 },
+      { "account_id": "14999999964", "price": 7.5 },
+      { "account_id": "14999999965", "price": 7.5 },
+      { "account_id": "14999999967", "price": 7.5 },
+      { "account_id": "14999999975", "price": 7.5 },
+      { "account_id": "14999999976", "price": 7.5 },
+      { "account_id": "14999999978", "price": 7.5 },
+      { "account_id": "15000000801", "price": 7.5 },
+      { "account_id": "15000000802", "price": 7.5 },
+      { "account_id": "15000000803", "price": 7.5 },
+      { "account_id": "15000000805", "price": 7.5 },
+      { "account_id": "15000000810", "price": 7.5 },
+      { "account_id": "15000000811", "price": 7.5 },
+      { "account_id": "15000000881", "price": 7.5 },
+      { "account_id": "15000000882", "price": 7.5 },
+      { "account_id": "15000000887", "price": 7.5 },
+      { "account_id": "14999999992", "price": 21 },
+      { "account_id": "15000000040", "price": 21 },
+      { "account_id": "15000000060", "price": 21 },
+      { "account_id": "15500000015", "price": 14 },
+      { "account_id": "15000000008", "price": 46 },
+      { "account_id": "14999999993", "price": 21 },
+      { "account_id": "14999999994", "price": 21 },
+      { "account_id": "14999999995", "price": 21 },
+      { "account_id": "14999999997", "price": 21 },
+      { "account_id": "15000000007", "price": 46 },
+      { "account_id": "15000000110", "price": 23 },
+      { "account_id": "15000001010", "price": 12 },
+      { "account_id": "15000000004", "price": 46 },
+      { "account_id": "14999999990", "price": 20 },
+      { "account_id": "15555555560", "price": 21 },
+      { "account_id": "15555555563", "price": 21 },
+      { "account_id": "15000000016", "price": 19 },
+      { "account_id": "15000000017", "price": 19 },
+      { "account_id": "15000000019", "price": 19 },
+      { "account_id": "15555555549", "price": 21 },
+      { "account_id": "15000000085", "price": 14 },
+      { "account_id": "15000000086", "price": 14 },
+      { "account_id": "15000000089", "price": 14 },
+      { "account_id": "15000000093", "price": 14 },
+      { "account_id": "15000000094", "price": 14 },
+      { "account_id": "15000000095", "price": 14 },
+      { "account_id": "15150001115", "price": 11 },
+      { "account_id": "15200000881", "price": 0.8 },
+      { "account_id": "15200001177", "price": 0.5 },
+      { "account_id": "14411111881", "price": 7.5 },
+      { "account_id": "14411111877", "price": 7.5 },
+      { "account_id": "15150000099", "price": 7.5 },
+      { "account_id": "15150000011", "price": 7.5 },
+      { "account_id": "15555555001", "price": 12 },
+      { "account_id": "15000000022", "price": 24 },
+      { "account_id": "15000000026", "price": 14 },
+      { "account_id": "15000001212", "price": 8.5 },
+      { "account_id": "15000006655", "price": 8.5 },
+      { "account_id": "15000000139", "price": 12 },
+      { "account_id": "15000000140", "price": 12 },
+      { "account_id": "15000000141", "price": 12 },
+      { "account_id": "15000000142", "price": 12 },
+      { "account_id": "15000000143", "price": 12 },
+      { "account_id": "15000000144", "price": 12 },
+      { "account_id": "15000000145", "price": 12 },
+      { "account_id": "15000000146", "price": 12 },
+      { "account_id": "15000000147", "price": 12 },
+      { "account_id": "15000000155", "price": 12 },
+      { "account_id": "15000000160", "price": 12 },
+      { "account_id": "15000000161", "price": 12 },
+      { "account_id": "15000000166", "price": 12 },
+      { "account_id": "15000000171", "price": 12 },
+      { "account_id": "15000000177", "price": 12 },
+      { "account_id": "15000000180", "price": 12 },
+      { "account_id": "15200000014", "price": 0.4 },
+      { "account_id": "15200000771", "price": 0.4 },
+      { "account_id": "15150000005", "price": 7.5 },
+      { "account_id": "14999999936", "price": 7.5 },
+      { "account_id": "15200001770", "price": 0.5 },
+      { "account_id": "14999999968", "price": 7.5 },
+      { "account_id": "14999999970", "price": 7.5 },
+      { "account_id": "14999999971", "price": 7.5 },
+      { "account_id": "14999999972", "price": 7.5 },
+      { "account_id": "14999999973", "price": 7.5 },
+      { "account_id": "14999999974", "price": 7.5 },
+      { "account_id": "15199999977", "price": 7.5 },
+      { "account_id": "14999999996", "price": 21 },
+      { "account_id": "15555555507", "price": 46 },
+      { "account_id": "15555555021", "price": 11 },
+      { "account_id": "15555554777", "price": 13 },
+      { "account_id": "15555554422", "price": 13 },
+      { "account_id": "15555555502", "price": 21 },
+      { "account_id": "15555555503", "price": 21 },
+      { "account_id": "15555555509", "price": 21 },
+      { "account_id": "15555555512", "price": 21 },
+      { "account_id": "15000001101", "price": 12 },
+      { "account_id": "15150000020", "price": 7.5 },
+      { "account_id": "15233333338", "price": 11 },
+      { "account_id": "15233333336", "price": 11 },
+      { "account_id": "15233333335", "price": 11 },
+      { "account_id": "15000005005", "price": 20 },
+      { "account_id": "15000000107", "price": 12 },
+      { "account_id": "15000000108", "price": 12 },
+      { "account_id": "15000000109", "price": 12 },
+      { "account_id": "15000000112", "price": 12 },
+      { "account_id": "15233333307", "price": 8.5 },
+      { "account_id": "14377777711", "price": 7.5 },
+      { "account_id": "14377777712", "price": 7.5 },
+      { "account_id": "14377777713", "price": 7.5 },
+      { "account_id": "15000000032", "price": 14 },
+      { "account_id": "15200000009", "price": 7.5 },
+      { "account_id": "15000000035", "price": 14 },
+      { "account_id": "15000001000", "price": 56 },
+      { "account_id": "15200000012", "price": 0.4 },
+      { "account_id": "15200001777", "price": 0.5 },
+      { "account_id": "15200001101", "price": 0.5 },
+      { "account_id": "15000000996", "price": 7.5 },
+      { "account_id": "15000000998", "price": 7.5 },
+      { "account_id": "14800000047", "price": 7.5 },
+      { "account_id": "14800000142", "price": 7.5 },
+      { "account_id": "14999999932", "price": 7.5 },
+      { "account_id": "14999999933", "price": 7.5 },
+      { "account_id": "14999999934", "price": 7.5 },
+      { "account_id": "14999999935", "price": 7.5 },
+      { "account_id": "14999999955", "price": 7.5 },
+      { "account_id": "14999999956", "price": 7.5 },
+      { "account_id": "14999999957", "price": 7.5 },
+      { "account_id": "14377777070", "price": 7.5 },
+      { "account_id": "14377777071", "price": 7.5 },
+      { "account_id": "14999999944", "price": 7.5 },
+      { "account_id": "15200000140", "price": 0.4 },
+      { "account_id": "15200000889", "price": 0.5 },
+      { "account_id": "14800000014", "price": 7.5 },
+      { "account_id": "14414444047", "price": 12 },
+      { "account_id": "15000000966", "price": 7.5 },
+      { "account_id": "14599999997", "price": 8.5 },
+      { "account_id": "14699999997", "price": 8.5 },
+      { "account_id": "15000000988", "price": 7.5 },
+      { "account_id": "15000000990", "price": 7.5 },
+      { "account_id": "15000000992", "price": 7.5 },
+      { "account_id": "15000000993", "price": 7.5 },
+      { "account_id": "14377777999", "price": 8.5 },
+      { "account_id": "15200000988", "price": 0.5 },
+      { "account_id": "15000000897", "price": 7.5 },
+      { "account_id": "15000000899", "price": 7.5 },
+      { "account_id": "14999999958", "price": 7.5 },
+      { "account_id": "14999999960", "price": 7.5 },
+      { "account_id": "14999999961", "price": 7.5 },
+      { "account_id": "14999999962", "price": 7.5 },
+      { "account_id": "14999999963", "price": 7.5 },
+      { "account_id": "14411111911", "price": 7.5 },
+      { "account_id": "14377777710", "price": 7.5 },
+      { "account_id": "15000001004", "price": 12 },
+      { "account_id": "15000001006", "price": 12 },
+      { "account_id": "15000001008", "price": 12 },
+      { "account_id": "15000001009", "price": 12 },
+      { "account_id": "15555555988", "price": 21 },
+      { "account_id": "15150001212", "price": 11 },
+      { "account_id": "15000000036", "price": 14 },
+      { "account_id": "15000000053", "price": 14 },
+      { "account_id": "15000000058", "price": 14 },
+      { "account_id": "15000000082", "price": 14 },
+      { "account_id": "15000000083", "price": 14 },
+      { "account_id": "15000000084", "price": 14 },
+      { "account_id": "15233333337", "price": 11 },
+      { "account_id": "15222222002", "price": 11 },
+      { "account_id": "15000000031", "price": 19 },
+      { "account_id": "15233333300", "price": 14 },
+      { "account_id": "15333333133", "price": 13 },
+      { "account_id": "15333333000", "price": 13 },
+      { "account_id": "14999999983", "price": 7.5 },
+      { "account_id": "15150001010", "price": 11 },
+      { "account_id": "15150000777", "price": 11 },
+      { "account_id": "15233333303", "price": 21 },
+      { "account_id": "15333333933", "price": 13 },
+      { "account_id": "14999999984", "price": 7.5 },
+      { "account_id": "14999999985", "price": 7.5 },
+      { "account_id": "15222222000", "price": 11 },
+      { "account_id": "15233333339", "price": 8.5 },
+      { "account_id": "14999999986", "price": 7.5 },
+      { "account_id": "15222222001", "price": 7.5 },
+      { "account_id": "14770777707", "price": 7.5 },
+      { "account_id": "15150000003", "price": 7.5 },
+      { "account_id": "15199999099", "price": 7.5 },
+      { "account_id": "15199999909", "price": 7.5 },
+      { "account_id": "15199999911", "price": 7.5 },
+      { "account_id": "15199999919", "price": 7.5 },
+      { "account_id": "15500000100", "price": 11 },
+      { "account_id": "15555553556", "price": 12 },
+      { "account_id": "15288888877", "price": 11 },
+      { "account_id": "15199999929", "price": 7.5 },
+      { "account_id": "14377777708", "price": 11 },
+      { "account_id": "15199999939", "price": 7.5 },
+      { "account_id": "15199999949", "price": 7.5 },
+      { "account_id": "15199999959", "price": 7.5 },
+      { "account_id": "15199999969", "price": 7.5 },
+      { "account_id": "15199999988", "price": 7.5 },
+      { "account_id": "15199999989", "price": 7.5 },
+      { "account_id": "15333333304", "price": 7.5 },
+      { "account_id": "15150000030", "price": 7.5 },
+      { "account_id": "15150000040", "price": 7.5 },
+      { "account_id": "15150000060", "price": 7.5 },
+      { "account_id": "15150000070", "price": 7.5 },
+      { "account_id": "15150000080", "price": 7.5 },
+      { "account_id": "15150000090", "price": 7.5 },
+      { "account_id": "15333333002", "price": 7.5 },
+      { "account_id": "15333333111", "price": 7.5 },
+      { "account_id": "15150000050", "price": 7.5 },
+      { "account_id": "14999999937", "price": 7.5 },
+      { "account_id": "14999999940", "price": 7.5 },
+      { "account_id": "14999999942", "price": 7.5 },
+      { "account_id": "14999999943", "price": 7.5 },
+      { "account_id": "14999999945", "price": 7.5 },
+      { "account_id": "14999999946", "price": 7.5 },
+      { "account_id": "14999999947", "price": 7.5 },
+      { "account_id": "14999999948", "price": 7.5 },
+      { "account_id": "14999999950", "price": 7.5 },
+      { "account_id": "14999999951", "price": 7.5 },
+      { "account_id": "14999999952", "price": 7.5 },
+      { "account_id": "14999999953", "price": 7.5 },
+      { "account_id": "15000000205", "price": 12 },
+      { "account_id": "14999999977", "price": 12 },
+      { "account_id": "14770777477", "price": 7.5 },
+      { "account_id": "14377777477", "price": 11 },
+      { "account_id": "14377777677", "price": 11 },
+      { "account_id": "14377777707", "price": 12 },
+      { "account_id": "14377778888", "price": 14 },
+      { "account_id": "14770777700", "price": 7.5 },
+      { "account_id": "15150000977", "price": 8.5 },
+      { "account_id": "15150000990", "price": 8.5 },
+      { "account_id": "15555555024", "price": 11 },
+      { "account_id": "15555553557", "price": 12 },
+      { "account_id": "15555553558", "price": 12 },
+      { "account_id": "15555553559", "price": 12 },
+      { "account_id": "15222220999", "price": 11 },
+      { "account_id": "15222220888", "price": 11 },
+      { "account_id": "15555553755", "price": 13 },
+      { "account_id": "15288888886", "price": 11 },
+      { "account_id": "15000006077", "price": 15 },
+      { "account_id": "15000009989", "price": 15 },
+      { "account_id": "14377777333", "price": 11 },
+      { "account_id": "14377777701", "price": 11 },
+      { "account_id": "15500000110", "price": 8.5 },
+      { "account_id": "14369996999", "price": 7.5 },
+      { "account_id": "15000007677", "price": 15 },
+      { "account_id": "14399999977", "price": 12 },
+      { "account_id": "14399999992", "price": 11 },
+      { "account_id": "14399999995", "price": 11 },
+      { "account_id": "14399999996", "price": 11 },
+      { "account_id": "14699999998", "price": 8.5 },
+      { "account_id": "15555555075", "price": 11 },
+      { "account_id": "15555555074", "price": 11 },
+      { "account_id": "15555555073", "price": 11 },
+      { "account_id": "15555555072", "price": 11 },
+      { "account_id": "15555555071", "price": 11 },
+      { "account_id": "15555555070", "price": 11 },
+      { "account_id": "15555555064", "price": 11 },
+      { "account_id": "15555555062", "price": 11 },
+      { "account_id": "15555555061", "price": 11 },
+      { "account_id": "15555555045", "price": 21 },
+      { "account_id": "15555554417", "price": 8.5 },
+      { "account_id": "15555555040", "price": 11 },
+      { "account_id": "15555555039", "price": 11 },
+      { "account_id": "15555555035", "price": 11 },
+      { "account_id": "15555555031", "price": 11 },
+      { "account_id": "15555555030", "price": 11 },
+      { "account_id": "15555555025", "price": 11 },
+      { "account_id": "15555555023", "price": 11 },
+      { "account_id": "15333333302", "price": 11 },
+      { "account_id": "15555554416", "price": 8.5 },
+      { "account_id": "15555554415", "price": 8.5 },
+      { "account_id": "15555554413", "price": 8.5 },
+      { "account_id": "15222222247", "price": 7.5 },
+      { "account_id": "14800000015", "price": 7.5 },
+      { "account_id": "15333333346", "price": 11 },
+      { "account_id": "15000000124", "price": 12 },
+      { "account_id": "15000000125", "price": 12 },
+      { "account_id": "14800000027", "price": 7.5 },
+      { "account_id": "15333333372", "price": 11 },
+      { "account_id": "15333333368", "price": 11 },
+      { "account_id": "15333333351", "price": 11 },
+      { "account_id": "15333333329", "price": 11 },
+      { "account_id": "15000000126", "price": 12 },
+      { "account_id": "15000000127", "price": 12 },
+      { "account_id": "15000000128", "price": 12 },
+      { "account_id": "15000000129", "price": 12 },
+      { "account_id": "15000000130", "price": 12 },
+      { "account_id": "15000000131", "price": 12 },
+      { "account_id": "15000000132", "price": 12 },
+      { "account_id": "15000000133", "price": 12 },
+      { "account_id": "15000000134", "price": 12 },
+      { "account_id": "15000000135", "price": 12 },
+      { "account_id": "15000000136", "price": 12 },
+      { "account_id": "15000000137", "price": 12 },
+      { "account_id": "15000000138", "price": 12 },
+      { "account_id": "15000000181", "price": 12 },
+      { "account_id": "15000000190", "price": 12 },
+      { "account_id": "15000000197", "price": 12 },
+      { "account_id": "15000000198", "price": 12 },
+      { "account_id": "15000000199", "price": 12 },
+      { "account_id": "15000000201", "price": 12 },
+      { "account_id": "15000000202", "price": 12 },
+      { "account_id": "15000000203", "price": 12 },
+      { "account_id": "15000000204", "price": 12 },
+      { "account_id": "15000000210", "price": 12 },
+      { "account_id": "15000000211", "price": 12 },
+      { "account_id": "15000000310", "price": 12 },
+      { "account_id": "15000000311", "price": 12 },
+      { "account_id": "15000000330", "price": 12 },
+      { "account_id": "15000000332", "price": 12 },
+      { "account_id": "15000000333", "price": 12 },
+      { "account_id": "15000000799", "price": 12 },
+      { "account_id": "14999999921", "price": 7.5 },
+      { "account_id": "15199999995", "price": 8.5 },
+      { "account_id": "15199999996", "price": 8.5 },
+      { "account_id": "15199999997", "price": 8.5 },
+      { "account_id": "15555555066", "price": 21 },
+      { "account_id": "15555555008", "price": 11 },
+      { "account_id": "15000000401", "price": 12 },
+      { "account_id": "15000000402", "price": 12 },
+      { "account_id": "15000000403", "price": 12 },
+      { "account_id": "15000000405", "price": 12 },
+      { "account_id": "15000000406", "price": 12 },
+      { "account_id": "15000000407", "price": 12 },
+      { "account_id": "15000000408", "price": 12 },
+      { "account_id": "15000000410", "price": 12 },
+      { "account_id": "15000000420", "price": 12 },
+      { "account_id": "15000000484", "price": 12 },
+      { "account_id": "15000000550", "price": 12 },
+      { "account_id": "15000000707", "price": 12 },
+      { "account_id": "15000000787", "price": 12 },
+      { "account_id": "15000000788", "price": 12 },
+      { "account_id": "14377777222", "price": 7.5 },
+      { "account_id": "15200000006", "price": 7.5 },
+      { "account_id": "15555555056", "price": 12 },
+      { "account_id": "15333333307", "price": 11 },
+      { "account_id": "15333333378", "price": 11 },
+      { "account_id": "15555554414", "price": 13 },
+      { "account_id": "15555554411", "price": 13 },
+      { "account_id": "15555553777", "price": 13 },
+      { "account_id": "14377777799", "price": 11 },
+      { "account_id": "14399999979", "price": 12 },
+      { "account_id": "14411111777", "price": 8.5 }
+    ];
+
+    // ---------- CONFIG ----------
+    const USD_TO_RUB = 92.50;  // fixed conversion rate
+
+    // ---------- DOM elements ----------
+    const tableBody = document.getElementById('tableBody');
+    const searchInput = document.getElementById('searchInput');
+    const totalCountSpan = document.getElementById('totalCount');
+    const minPriceSpan = document.getElementById('minPrice');
+    const maxPriceSpan = document.getElementById('maxPrice');
+    const displayedCountSpan = document.getElementById('displayedCount');
+    const noResultMessage = document.getElementById('noResultMessage');
+    const sortDefaultBtn = document.getElementById('sortDefaultBtn');
+    const sortPriceAscBtn = document.getElementById('sortPriceAscBtn');
+    const sortPriceDescBtn = document.getElementById('sortPriceDescBtn');
+
+    // ---------- State ----------
+    let currentSort = 'desc';    // 'default', 'asc', 'desc'
+    let searchTerm = '';
+
+    // ---------- Helper: format ruble ----------
+    function formatRub(usdPrice) {
+      const rub = usdPrice * USD_TO_RUB;
+      // Format with two decimals, add thousands separator
+      return rub.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    // ---------- Compute stats (global) ----------
+    function updateGlobalStats() {
+      const prices = rawAccounts.map(a => a.price);
+      const total = rawAccounts.length;
+      const min = Math.min(...prices);
+      const max = Math.max(...prices);
+      totalCountSpan.textContent = total;
+      minPriceSpan.textContent = `$${min.toFixed(2)}`;
+      maxPriceSpan.textContent = `$${max.toFixed(2)}`;
+    }
+
+    // ---------- Render table based on current sort & search ----------
+    function renderTable() {
+      // 1. filter by search term
+      let filtered = rawAccounts.filter(acc => 
+        acc.account_id.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+      // 2. sort
+      if (currentSort === 'asc') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (currentSort === 'desc') {
+        filtered.sort((a, b) => b.price - a.price);
+      } // 'default' leaves original order (already in rawAccounts)
+
+      // 3. render rows
+      if (filtered.length === 0) {
+        tableBody.innerHTML = '';
+        noResultMessage.style.display = 'block';
+        displayedCountSpan.textContent = '0';
+        return;
+      }
+
+      noResultMessage.style.display = 'none';
+      const rowsHtml = filtered.map(acc => {
+        const usd = acc.price;
+        const rubFormatted = formatRub(usd);
+        return `
+          <tr>
+            <td>
+              <div class="account-id">
+                <i class="fas fa-id-card"></i>
+                ${acc.account_id}
+              </div>
+            </td>
+            <td><span class="price-usd">$${usd.toFixed(2)}</span></td>
+            <td><span class="price-rub"><i class="fas fa-ruble-sign"></i> ${rubFormatted} ₽</span></td>
+          </tr>
+        `;
+      }).join('');
+
+      tableBody.innerHTML = rowsHtml;
+      displayedCountSpan.textContent = filtered.length;
+    }
+
+    // ---------- Update active button styling ----------
+    function setActiveSortButton(active) {
+      [sortDefaultBtn, sortPriceAscBtn, sortPriceDescBtn].forEach(btn => btn.classList.remove('active'));
+      if (active === 'default') sortDefaultBtn.classList.add('active');
+      else if (active === 'asc') sortPriceAscBtn.classList.add('active');
+      else if (active === 'desc') sortPriceDescBtn.classList.add('active');
+    }
+
+    // ---------- Event listeners ----------
+    function init() {
+      // initial stats
+      updateGlobalStats();
+
+      // initial render (default sort = desc already set via active button in HTML)
+      // but to be consistent, let's set default state to 'desc' as active.
+      // The HTML has "sortPriceDescBtn" with class active, so we sync.
+      // But we also want the correct order: desc sort.
+      currentSort = 'desc';
+      setActiveSortButton('desc');
+      renderTable();
+
+      // search
+      searchInput.addEventListener('input', (e) => {
+        searchTerm = e.target.value.trim();
+        renderTable();
+      });
+
+      // sort default
+      sortDefaultBtn.addEventListener('click', () => {
+        currentSort = 'default';
+        setActiveSortButton('default');
+        renderTable();
+      });
+
+      // sort price ascending
+      sortPriceAscBtn.addEventListener('click', () => {
+        currentSort = 'asc';
+        setActiveSortButton('asc');
+        renderTable();
+      });
+
+      // sort price descending
+      sortPriceDescBtn.addEventListener('click', () => {
+        currentSort = 'desc';
+        setActiveSortButton('desc');
+        renderTable();
+      });
+    }
+
+    // run on page load
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
